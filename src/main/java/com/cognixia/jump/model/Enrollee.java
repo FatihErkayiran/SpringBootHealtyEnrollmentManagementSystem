@@ -1,17 +1,25 @@
 package com.cognixia.jump.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+@Entity
+@Table(name="enrollee")
 public class Enrollee implements Serializable{
 
 	/**
@@ -24,20 +32,21 @@ public class Enrollee implements Serializable{
 	private long id;
 	@NotBlank
 	private String name;
-	@NotEmpty
+	@NotNull
 	private boolean activationStatus;
-    @NotBlank
-	private Date birthDate;
+    @NotNull
+	private LocalDate birthDate;
     private String telephoneNumber;
     
+ //   @JsonManagedReference
     @OneToMany(mappedBy = "enrollee", cascade = CascadeType.ALL)
     private List<Dependents>dependents;
 	
 	public Enrollee() {
-	
+	     this(-1L, "N/A", false,LocalDate.now(), "N/A", new ArrayList<>());
 	}
 
-	public Enrollee(long id, @NotBlank String name, @NotEmpty boolean activationStatus, @NotBlank Date birthDate,
+	public Enrollee(long id, @NotBlank String name, @NotNull boolean activationStatus, @NotNull LocalDate birthDate,
 			String telephoneNumber, List<Dependents> dependents) {
 		super();
 		this.id = id;
@@ -72,11 +81,11 @@ public class Enrollee implements Serializable{
 		this.activationStatus = activationStatus;
 	}
 
-	public Date getBirthDate() {
+	public LocalDate getBirthDate() {
 		return birthDate;
 	}
 
-	public void setBirthDate(Date birthDate) {
+	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
 	}
 
@@ -93,7 +102,18 @@ public class Enrollee implements Serializable{
 	}
 
 	public void setDependents(List<Dependents> dependents) {
-		this.dependents = dependents;
+		//this.dependents = dependents;
+		for (int i = 0; i < dependents.size(); i++) {
+			Dependents dep=dependents.get(i);
+			dep.setEnrollee(this);
+		    this.dependents.add(dep);	
+		}
+	}
+
+	@Override
+	public String toString() {
+		return "Enrollee [id=" + id + ", name=" + name + ", activationStatus=" + activationStatus + ", birthDate="
+				+ birthDate + ", telephoneNumber=" + telephoneNumber + ", dependents=" + dependents + "]";
 	}
 
 	
