@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.cognixia.jump.model.Dependents;
 
 
-
+@Repository
 public interface DependentsRepository extends JpaRepository<Dependents, Long>{
 	List<Dependents>findByEnrolleeId(long id);
 	Optional<Dependents>findByIdAndEnrolleeId(long id,long enrolleeId);
