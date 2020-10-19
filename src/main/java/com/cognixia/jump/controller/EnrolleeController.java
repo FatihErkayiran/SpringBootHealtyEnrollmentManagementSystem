@@ -91,7 +91,7 @@ public class EnrolleeController {
 	public ResponseEntity<Enrollee> updateEnrolleeById(@RequestBody Enrollee enrollee) throws ResourceNotFoundException{
 		boolean found=repository.existsById(enrollee.getId());
 		if (!found) {
-			throw new ResourceNotFoundException("Restaurant with id "+ enrollee.getId() + " not found");
+			throw new ResourceNotFoundException("Enrollee with id "+ enrollee.getId() + " not found");
 			
 		}
 		Enrollee enrollee2=repository.save(enrollee);

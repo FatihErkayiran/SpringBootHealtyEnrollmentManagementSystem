@@ -118,8 +118,8 @@ class EnrolleeControllerTest {
 		        .contentType( MediaType.APPLICATION_JSON)
 		        .content( asJsonString(enroll)))
 		.andDo(print())
-	//	.andExpect(status().isCreated())
-		.andExpect(jsonPath("$.name").value(enroll.getName()));
+		.andExpect(status().isCreated());
+		//.andExpect(jsonPath("$.name").value(enroll.getName()));
 		
 		verify(repo,times(1)).save(Mockito.any(Enrollee.class));
 		verifyNoMoreInteractions(repo);
@@ -132,7 +132,7 @@ class EnrolleeControllerTest {
 		String uri=STARTING_URI+"/update/enrollee";
 		long id=1L;
 		
-		Enrollee enrollee=new Enrollee(7L, "Mike", false, LocalDate.of(1980, 10, 10), "2253435656", new ArrayList<>());
+		Enrollee enrollee=new Enrollee(id, "Mike", false, LocalDate.of(1980, 10, 10), "2253435656", new ArrayList<>());
 		 when(repo.existsById(id)).thenReturn(true);
 		  when(repo.save(Mockito.any(Enrollee.class))).thenReturn(enrollee);
 		  

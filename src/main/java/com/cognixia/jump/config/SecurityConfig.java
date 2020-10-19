@@ -21,7 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth)throws Exception {
 		
-		// for in memory
+		 //for in memory
 //		auth.inMemoryAuthentication()
 //			.withUser("user1")
 //			.password("123")
@@ -40,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			
 			httpSecurity.csrf().disable()
 			            .authorizeRequests()
-			            .antMatchers(HttpMethod.GET,"/api/enrollees").hasRole("ADMIN")
+			            .antMatchers("/api/enrollees").hasRole("ADMIN")
 			            .antMatchers(HttpMethod.POST,"api/add/enrollee").hasRole("ADMIN")
 			            .antMatchers(HttpMethod.PUT, "api/update/enrollee").hasRole("USER")
 			            .antMatchers(HttpMethod.DELETE,"api/delete/enrollee").hasRole("ADMIN")
@@ -51,8 +51,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			            .antMatchers(HttpMethod.POST,"api/enrollee/{id}/add/dependents").hasRole("USER")
 			            .antMatchers(HttpMethod.PUT,"api/enrollee/{id}/update/dependents").hasRole("USER")
 			            .antMatchers(HttpMethod.DELETE,"api/enrollee/{id}/delete/dependents").hasRole("USER")
-			            .antMatchers("/").hasAnyRole("USER","ADMIN")
-			            .antMatchers("/api/car/{id}").permitAll()
 			            .and().formLogin()
 			            .and().httpBasic();
 			
