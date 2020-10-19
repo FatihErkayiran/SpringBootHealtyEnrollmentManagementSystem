@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -52,6 +53,8 @@ public class Enrollee implements Serializable{
     @OneToMany(mappedBy = "enrollee", cascade = CascadeType.ALL)
     private List<Dependents>dependents;
 	
+    @OneToOne(mappedBy = "enrollee")
+    private User user;
 	public Enrollee() {
 	     this(-1L, "N/A", false,LocalDate.now(), "N/A", new ArrayList<>());
 	}
