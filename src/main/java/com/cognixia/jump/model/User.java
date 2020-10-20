@@ -2,7 +2,7 @@ package com.cognixia.jump.model;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -10,8 +10,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+
 
 
 
@@ -28,7 +27,7 @@ public class User implements Serializable {
 	}
 	
 	public User() {
-		this(-1L, "N/A", "N/A", Role.ROLE_USER, false, "N/A",new Enrollee());
+		this(-1L, "N/A", "N/A", Role.ROLE_USER, false, "N/A");
 	}
 	
 	@Id
@@ -45,11 +44,8 @@ public class User implements Serializable {
 	private boolean enabled;
 	private String email;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(unique = true)
-	private Enrollee enrollee;
 
-	public User(Long id, String username, String password, Role role, boolean enabled, String email,Enrollee enrollee) {
+	public User(Long id, String username, String password, Role role, boolean enabled, String email) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -57,7 +53,7 @@ public class User implements Serializable {
 		this.role = role;
 		this.enabled = enabled;
 		this.email = email;
-	    this.enrollee=enrollee;
+	  
 	}
 
 	public Long getId() {
@@ -108,18 +104,12 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
-	public Enrollee getEnrollee() {
-		return enrollee;
-	}
 
-	public void setEnrollee(Enrollee enrollee) {
-		this.enrollee = enrollee;
-	}
 
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", role=" + role + ", enabled="
-				+ enabled + ", email=" + email + ", enrollee=" + enrollee + "]";
+				+ enabled + ", email=" + email + "]";
 	}
 	
 	
